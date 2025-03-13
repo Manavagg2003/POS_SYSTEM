@@ -1,22 +1,26 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./db");
-const ordersRoutes = require("./routes/orders"); // Ensure this path is correct
+const inventoryRoutes = require("./routes/inventory");
+const ordersRoutes = require("./routes/orders");
+const checkoutRoutes = require("./routes/checkout");
+const printBillRoutes = require("./routes/printBill");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// Mount order routes
-console.log(ordersRoutes);
-app.use("/orders", ordersRoutes); // Ensure ordersRoutes is a valid router
+app.use("/inventory", inventoryRoutes);
+app.use("/orders", ordersRoutes);
+app.use("/checkout", checkoutRoutes);
+app.use("/print-bill", printBillRoutes);
 
 app.get("/", (req, res) => {
     res.send("POS System API is running!");
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
